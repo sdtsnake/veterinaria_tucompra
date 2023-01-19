@@ -40,4 +40,12 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
+    @PutMapping
+    public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@RequestBody @Valid UsuarioDto usuarioDto){
+        try{
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.update(usuarioDto)));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
+        }
+    }
 }
