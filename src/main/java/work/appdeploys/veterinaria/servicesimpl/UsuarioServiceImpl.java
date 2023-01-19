@@ -11,6 +11,7 @@ import work.appdeploys.veterinaria.repositories.UsuarioRepository;
 import work.appdeploys.veterinaria.services.UsuarioService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,12 +43,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
     @Override
     public List<UsuarioDto> findAll() {
-        return null;
+        List<Usuario> usuarioList = usuarioRepository.findAll();
+        if(usuarioList.isEmpty()){
+            throw new UsuarioExeptionBadRequest(MessageResource.USUARIO_NOT_FOUND.getValue());
+        }
+        return usuarioList.stream().map(usuarioMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public UsuarioDto findByDocumentoId(Long idDocumento) {
-        return null;
+    public UsuarioDto findByDocumentoId(Integer idDocumento) {
+        Usuario usuario = usuarioRepository
+                .findByDocumentoId(idDocumento)
+                .orElseThrow(() ->new UsuarioExeptionBadRequest(MessageResource.USUARIO_NOT_FOUND.getValue()));
+
+        return usuarioMapper.toDto(usuario);
     }
     private void validateNotExistUsuarioById(Long id, String message) {
         if(usuarioRepository.findById(id).isPresent()){

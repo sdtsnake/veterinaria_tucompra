@@ -12,6 +12,7 @@ import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
 import work.appdeploys.veterinaria.services.UsuarioService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name="Usuario")
 @RequiredArgsConstructor
@@ -48,4 +49,23 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
+    @GetMapping
+    public ResponseEntity<ControllerResponseDto<List<UsuarioDto>>> findAll(){
+        try {
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.findAll()));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
+        }
+    }
+    @GetMapping(path = "/{documentoId}")
+    public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@PathVariable Integer documentoId){
+        try{
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.findByDocumentoId(documentoId)));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
+        }
+
+    }
+
+
 }

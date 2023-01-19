@@ -10,5 +10,5 @@ public interface UsuarioService {
     void delete(Long id);
     UsuarioDto update(UsuarioDto usuarioDto);
     List<UsuarioDto> findAll();
-    UsuarioDto findByDocumentoId(Long idDocumento);
+    UsuarioDto findByDocumentoId(Integer idDocumento);
 }
