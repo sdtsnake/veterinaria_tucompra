@@ -16,12 +16,12 @@ import java.util.List;
 
 @Tag(name="Usuario")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/veterinaria/")
+@RequestMapping(value = "/api/veterinaria/usuario/")
 @RestController
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ControllerResponseDto<UsuarioDto>> save(@RequestBody @Valid UsuarioDto usuarioDto){
         try{
             return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.save(usuarioDto)));
@@ -66,6 +66,4 @@ public class UsuarioController {
         }
 
     }
-
-
 }

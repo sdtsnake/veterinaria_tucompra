@@ -1,14 +1,37 @@
 package work.appdeploys.veterinaria.servicesimpl;
 
-import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
-import work.appdeploys.veterinaria.services.UsuarioService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import work.appdeploys.veterinaria.constans.MessageResource;
+import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
+import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
+import work.appdeploys.veterinaria.mappers.MascotaMapper;
+import work.appdeploys.veterinaria.models.Mascota;
+import work.appdeploys.veterinaria.models.dtos.MascotaDto;
+import work.appdeploys.veterinaria.repositories.MascotaRepository;
+import work.appdeploys.veterinaria.repositories.UsuarioRepository;
+import work.appdeploys.veterinaria.services.MascotaService;
 
-import java.util.List;
+import java.util.*;
 
-public class MascotaServiceImpl implements UsuarioService {
+@Service
+@RequiredArgsConstructor
+public class MascotaServiceImpl implements MascotaService {
+
+    private final MascotaMapper mascotaMapper;
+    private final MascotaRepository mascotaRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public static Set<Integer> sexoValido = new HashSet<>(Arrays.asList(0, 1));
+
+
     @Override
-    public UsuarioDto save(UsuarioDto usuarioDto) {
-        return null;
+    public MascotaDto save(MascotaDto mascotaDto) {
+        validateExistUsuarioById(mascotaDto.getUsuario().getId(), MessageResource.USUARIO_NOT_EXISTS.getValue().trim());
+        validateNameAndUsuarioId(mascotaDto.getUsuario().getId(), mascotaDto.getNombre());
+        validaCampos(mascotaDto.getSexo());
+
+        return mascotaMapper.toDto(mascotaRepository.save(mascotaMapper.toModel(mascotaDto)));
     }
 
     @Override
@@ -17,17 +40,34 @@ public class MascotaServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDto update(UsuarioDto usuarioDto) {
+    public MascotaDto update(MascotaDto mascotaDto) {
         return null;
     }
 
     @Override
-    public List<UsuarioDto> findAll() {
+    public List<MascotaDto> findAll() {
         return null;
     }
 
     @Override
-    public UsuarioDto findByDocumentoId(Integer idDocumento) {
+    public List<MascotaDto> findAllByDocumentoId(Integer idDocumento) {
         return null;
+    }
+
+    private void validateNameAndUsuarioId(Long id, String nombre){
+        List<Mascota> mascotaList = mascotaRepository.findAllByUsuarioId_Id(id);
+        for (Mascota m: mascotaList){
+            if(m.getNombre().trim().equalsIgnoreCase(nombre)){
+                throw new MascotaExeptionBadRequest(MessageResource.MASCOTA_ALREADY_EXISTS.getValue());
+            }
+        }
+    }
+    private void validaCampos(Integer sexo) {
+        if (!sexoValido.contains(sexo)) {
+            throw new MascotaExeptionBadRequest(MessageResource.MASCOTA_SEX_CODE_NOT_EXISTS.getValue());
+        }
+    }
+    private void validateExistUsuarioById(Long id, String message) {
+        usuarioRepository.findById(id).orElseThrow(() -> new UsuarioExeptionBadRequest(message));
     }
 }

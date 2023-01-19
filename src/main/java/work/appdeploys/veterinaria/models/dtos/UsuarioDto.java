@@ -22,8 +22,8 @@ public class UsuarioDto {
     @Schema(description = "Estado civil del usuario",example = "Casado")
     private String estado;
     @Schema(description = "Sexo del usuario que pueden tener los siguiente valores" +
-            "0=Masculino" +
-            "1=Femenino" +
+            "0=Masculino, " +
+            "1=Femenino, " +
             "2=No definido",example = "0")
     private Integer sexo;
 }

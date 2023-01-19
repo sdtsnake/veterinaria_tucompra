@@ -31,7 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void delete(Long id) {
-        validateExistUsuarioById(id, MessageResource.USUARIO_NOT_EXISTS.getValue());
+        validateExistUsuarioById(id, MessageResource.USUARIO_NOT_EXISTS_DELETE.getValue());
         usuarioRepository.deleteById(id);
     }
 

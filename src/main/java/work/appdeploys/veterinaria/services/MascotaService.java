@@ -9,7 +9,7 @@ public interface MascotaService {
 
     MascotaDto save(MascotaDto mascotaDto);
     void delete(Long id);
-    MascotaDto update(UsuarioDto usuarioDto);
-    List<UsuarioDto> findAll();
+    MascotaDto update(MascotaDto mascotaDto);
+    List<MascotaDto> findAll();
     List<MascotaDto> findAllByDocumentoId(Integer idDocumento);
 }
