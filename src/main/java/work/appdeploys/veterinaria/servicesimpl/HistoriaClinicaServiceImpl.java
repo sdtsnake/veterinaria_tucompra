@@ -8,7 +8,6 @@ import work.appdeploys.veterinaria.exceptions.HistoriaClinicaExeptionBadRequest;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.HistoriaClinicaMapper;
 import work.appdeploys.veterinaria.models.HistoriaClinica;
-import work.appdeploys.veterinaria.models.Mascota;
 import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaDto;
 import work.appdeploys.veterinaria.repositories.HistoriaClinicaRepository;
 import work.appdeploys.veterinaria.repositories.MascotaRepository;
@@ -42,7 +41,6 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
         validateExistHistoriaClinica(id,MessageResource.HISTORIA_CLINICA_NOT_EXISTS.getValue().trim());
         historiaClinicaRepository.deleteById(id);
     }
-
     @Override
     public HistoriaClinicaDto update(HistoriaClinicaDto historiaClinicaDto) {
         validateExistMascotaById(historiaClinicaDto.getMascota().getId(), MessageResource.MASCOTA_NOT_EXISTS.getValue().trim());
