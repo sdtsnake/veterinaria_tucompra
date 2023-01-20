@@ -10,7 +10,12 @@ import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
 import work.appdeploys.veterinaria.repositories.UsuarioRepository;
 import work.appdeploys.veterinaria.services.UsuarioService;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +28,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDto save(UsuarioDto usuarioDto) {
-        validateNotExistUsuarioById(usuarioDto.getId(), MessageResource.USUARIO_ALREADY_EXISTS.getValue());
+        if(!Objects.isNull(usuarioDto.getId())){
+            validateNotExistUsuarioById(usuarioDto.getId(), MessageResource.USUARIO_ALREADY_EXISTS.getValue());
+        }
         validateExistUsuarioByDocumentId(usuarioDto.getDocumentoId(),MessageResource.USUARIO_DOCUMENT_ID_ALREADY_EXISTS.getValue());
         validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo());
         return usuarioMapper.toDto(usuarioRepository.save(usuarioMapper.toModel(usuarioDto)));
@@ -74,9 +81,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
     private void validateExistUsuarioByDocumentId(Integer documentoId, Long id ,String message) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByDocumentoId(documentoId);
-        if(usuarioOptional.isPresent() && usuarioOptional.get().getId() != id){
-            throw new UsuarioExeptionBadRequest(message);
+        List<Usuario> usuarioList = usuarioRepository.findAllByDocumentoId(documentoId);
+        for (Usuario l: usuarioList) {
+            if(l.getId() != id){
+                throw new UsuarioExeptionBadRequest(message);
+            }
         }
     }
     private void validateExistUsuarioByDocumentId(Integer documentoId, String message) {

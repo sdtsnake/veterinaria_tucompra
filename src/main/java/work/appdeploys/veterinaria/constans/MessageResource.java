@@ -14,9 +14,13 @@ public enum MessageResource {
     MASCOTA_NOT_EXISTS_DELETE ("La mascota no esta en la base de datos por ese id no se puede borrar"),
     MASCOTA_NOT_EXISTS ("La mascota no esta en la base de datos"),
     MASCOTAS_NOT_FOUND ("No existen macotas para listar"),
+    HISTORIA_CLINICA_NOT_EXISTS ("La historia clinica no esta en la base de datos"),
+    HISTORIA_CLINICA_ALREADY_EXISTS ("Ya exite historia clinica en la base de datos"),
+    HISTORIA_CLINICA_MASCOTA_ALREADY_EXISTS ("Macota ya tiene historia clinica"),
+    HISTORIA_CLINICA_NOT_FOUND ("No existe historia clinica para listar"),
 
-
-    CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar");
+    CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar"),
+    DATE_NOT_VALID("Fecha no valida");
     private String value;
     public String getValue()
     {

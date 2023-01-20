@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
-import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.MascotaMapper;
 import work.appdeploys.veterinaria.models.Mascota;
-import work.appdeploys.veterinaria.models.Usuario;
 import work.appdeploys.veterinaria.models.dtos.MascotaDto;
 import work.appdeploys.veterinaria.repositories.MascotaRepository;
 import work.appdeploys.veterinaria.repositories.UsuarioRepository;
@@ -16,6 +14,7 @@ import work.appdeploys.veterinaria.services.MascotaService;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,9 @@ public class MascotaServiceImpl implements MascotaService {
 
     @Override
     public MascotaDto save(MascotaDto mascotaDto) {
-        validateNotExistMascotaById(mascotaDto.getId(), MessageResource.MASCOTA_ALREADY_EXISTS_ID.getValue().trim());
+        if(!Objects.isNull(mascotaDto.getId())){
+            validateNotExistMascotaById(mascotaDto.getId(), MessageResource.MASCOTA_ALREADY_EXISTS_ID.getValue().trim());
+        }
         validateExistUsuarioById(mascotaDto.getUsuario().getId(), MessageResource.USUARIO_NOT_EXISTS.getValue().trim());
         validateNameAndUsuarioId(mascotaDto.getUsuario().getId(), mascotaDto.getNombre());
         validaCampos(mascotaDto.getSexo());

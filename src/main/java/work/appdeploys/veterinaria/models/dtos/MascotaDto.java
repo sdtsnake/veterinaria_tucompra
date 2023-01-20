@@ -2,7 +2,6 @@ package work.appdeploys.veterinaria.models.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import work.appdeploys.veterinaria.models.Usuario;
 
 @Data
 @Schema(description = "Mascotas")
@@ -13,7 +12,7 @@ public class MascotaDto {
     private String nombre;
     @Schema(description = "Raza de la mascota",example = "Criollo")
     private String raza;
-    @Schema(description = "Numero de indentificaicon del propietario",example = "94041436")
+    @Schema(description = "Id del usuario",example = "1")
     private UsuarioDto usuario;
     @Schema(description = "Sexo del usuario que pueden tener los siguiente valores" +
             "0=Masculino " +
