@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
 import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
+import work.appdeploys.veterinaria.services.UsuarioService;
 
 @Tag(name="Usuario")
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/veterinaria/usuario/")
 @RestController
-public class UsuarioController extends CRUDController<UsuarioDto>{
+public class UsuarioController extends CRUDController<UsuarioDto, UsuarioService>{
 
     @GetMapping(path = "/documentoid/{documentoId}")
     public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@PathVariable Integer documentoId){

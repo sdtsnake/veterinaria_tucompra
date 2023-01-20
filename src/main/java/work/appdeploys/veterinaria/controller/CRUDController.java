@@ -1,5 +1,6 @@
 package work.appdeploys.veterinaria.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,10 @@ import work.appdeploys.veterinaria.services.CRUDService;
 import javax.validation.Valid;
 import java.util.List;
 
-public abstract class CRUDController <D> {
+public abstract class CRUDController <D,S extends CRUDService<D>>  {
 
-    protected CRUDService<D> service;
+    @Autowired
+    protected S service;
     @PostMapping
     public ResponseEntity<ControllerResponseDto<D>> save(@RequestBody @Valid D dto) {
         try {

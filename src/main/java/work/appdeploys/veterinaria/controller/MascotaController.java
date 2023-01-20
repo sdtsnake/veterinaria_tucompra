@@ -5,12 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import work.appdeploys.veterinaria.models.dtos.MascotaDto;
+import work.appdeploys.veterinaria.services.MascotaService;
 
 @Tag(name = "Mascota")
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/veterinaria/mascota/")
 @RestController
-public class MascotaController extends CRUDController<MascotaDto> {
+public class MascotaController extends CRUDController<MascotaDto, MascotaService> {
 
 }
 
