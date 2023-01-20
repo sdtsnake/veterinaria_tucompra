@@ -11,7 +11,7 @@ public interface UsuarioMapper {
     Usuario toModel(UsuarioDto usuarioDto);
     UsuarioDto toDto(Usuario usuario);
     @BeforeMapping
-    default void tirmModles(Usuario usuario, @MappingTarget UsuarioDto usuarioDto){
+    default void trimModels(Usuario usuario, @MappingTarget UsuarioDto usuarioDto){
         usuario.setApellido(usuario.getApellido().trim());
         usuario.setNombre(usuario.getNombre().trim());
         usuario.setEstado(usuario.getEstado().trim());

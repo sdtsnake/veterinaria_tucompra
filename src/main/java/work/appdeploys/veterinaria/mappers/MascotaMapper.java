@@ -14,7 +14,7 @@ public interface MascotaMapper {
     Mascota toModel(MascotaDto mascotaDto);
     MascotaDto toDto(Mascota mascota);
     @BeforeMapping
-    default void tirmModles(Mascota mascota, @MappingTarget MascotaDto mascotaDto){
+    default void trimModels(Mascota mascota, @MappingTarget MascotaDto mascotaDto){
         mascota.setNombre(mascota.getNombre().trim());
         mascota.setRaza(mascota.getRaza().trim());
         Usuario usuario = mascota.getUsuario();
