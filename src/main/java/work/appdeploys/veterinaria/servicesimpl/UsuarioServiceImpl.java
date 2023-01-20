@@ -19,7 +19,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioMapper usuarioMapper;
     private final UsuarioRepository usuarioRepository;
     public static Set<String> tipoDocumentoValido = new HashSet<>(Arrays.asList("CC", "TI", "RUT"));
-    public static Set<Integer> sexoValido = new HashSet<>(Arrays.asList(0, 1, 2));
+    public final Set<Integer> sexoValido = new HashSet<>(Arrays.asList(0, 1, 2));
 
     @Override
     public UsuarioDto save(UsuarioDto usuarioDto) {

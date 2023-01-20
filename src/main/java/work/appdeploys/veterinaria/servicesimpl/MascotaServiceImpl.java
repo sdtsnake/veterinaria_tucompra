@@ -27,7 +27,7 @@ public class MascotaServiceImpl implements MascotaService {
     private final MascotaRepository mascotaRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public static Set<Integer> sexoValido = new HashSet<>(Arrays.asList(0, 1));
+    public final Set<Integer> sexoValido = new HashSet<>(Arrays.asList(0, 1));
 
 
     @Override

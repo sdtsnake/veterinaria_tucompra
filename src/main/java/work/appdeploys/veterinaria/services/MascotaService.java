@@ -1,7 +1,6 @@
 package work.appdeploys.veterinaria.services;
 
 import work.appdeploys.veterinaria.models.dtos.MascotaDto;
-import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
 
 import java.util.List;
 
