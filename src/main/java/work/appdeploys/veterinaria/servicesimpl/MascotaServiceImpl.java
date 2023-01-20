@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
-import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.MascotaMapper;
 import work.appdeploys.veterinaria.models.Mascota;
 import work.appdeploys.veterinaria.models.dtos.MascotaDto;
@@ -12,7 +11,10 @@ import work.appdeploys.veterinaria.repositories.MascotaRepository;
 import work.appdeploys.veterinaria.repositories.UsuarioRepository;
 import work.appdeploys.veterinaria.services.MascotaService;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +44,10 @@ public class MascotaServiceImpl implements MascotaService {
 
     @Override
     public MascotaDto update(MascotaDto mascotaDto) {
-        return null;
+        validateExistMascotaById(mascotaDto.getId(), MessageResource.MASCOTA_NOT_EXISTS.getValue().trim());
+        validaCampos(mascotaDto.getSexo());
+        validateNameAndUsuarioId(mascotaDto.getUsuario().getId(), mascotaDto.getNombre());
+        return mascotaMapper.toDto(mascotaRepository.save(mascotaMapper.toModel(mascotaDto)));
     }
 
     @Override

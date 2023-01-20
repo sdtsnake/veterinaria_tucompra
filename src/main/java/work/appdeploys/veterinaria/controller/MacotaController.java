@@ -41,6 +41,13 @@ public class MacotaController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
+
+    @PutMapping
+    public ResponseEntity<ControllerResponseDto<MascotaDto>> update(@RequestBody @Valid MascotaDto mascotaDto) {
+        try {
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.update(mascotaDto)));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
+        }
+    }
 }
-
-
