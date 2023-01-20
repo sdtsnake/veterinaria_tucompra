@@ -16,7 +16,8 @@ public enum MessageResource {
     MASCOTAS_NOT_FOUND ("No existen macotas para listar"),
 
 
-    CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar");
+    CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar"),
+    DATE_NOT_VALID("Fecha no valida");
     private String value;
     public String getValue()
     {
