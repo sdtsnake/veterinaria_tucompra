@@ -16,12 +16,12 @@ import java.util.List;
 
 @Tag(name="Usuario")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/veterinaria/")
+@RequestMapping(value = "/api/veterinaria/usuario/")
 @RestController
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ControllerResponseDto<UsuarioDto>> save(@RequestBody @Valid UsuarioDto usuarioDto){
         try{
             return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.save(usuarioDto)));
@@ -35,7 +35,7 @@ public class UsuarioController {
             usuarioService.delete(id);
             return ResponseEntity.ok(ControllerResponseDto.fromValid(null));
         }catch (DataIntegrityViolationException ex){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.USUARIO_CONSTRAIN_VIOLATION.toString()));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.CONSTRAIN_VIOLATION.toString()));
         }
         catch (Exception ex){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
@@ -57,7 +57,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
         }
     }
-    @GetMapping(path = "/{documentoId}")
+    @GetMapping(path = "/documentoid/{documentoId}")
     public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@PathVariable Integer documentoId){
         try{
             return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.findByDocumentoId(documentoId)));
@@ -66,6 +66,14 @@ public class UsuarioController {
         }
 
     }
+    @GetMapping(path = "/id/{id}")
+    public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.findById(id)));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
+        }
 
-
+    }
 }
+
