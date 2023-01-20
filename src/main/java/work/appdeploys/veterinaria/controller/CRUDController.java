@@ -1,41 +1,33 @@
 package work.appdeploys.veterinaria.controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
-import work.appdeploys.veterinaria.models.dtos.MascotaDto;
-import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
-import work.appdeploys.veterinaria.services.MascotaService;
+import work.appdeploys.veterinaria.services.CRUDService;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@Tag(name = "Mascota")
-@RequiredArgsConstructor
-@RequestMapping(value = "/api/veterinaria/mascota/")
-@RestController
-public class MacotaController {
+public abstract class CRUDController <D,S extends CRUDService<D>>  {
 
-    private final MascotaService mascotaService;
-
+    @Autowired
+    protected S service;
     @PostMapping
-    public ResponseEntity<ControllerResponseDto<MascotaDto>> save(@RequestBody @Valid MascotaDto mascotaDto) {
+    public ResponseEntity<ControllerResponseDto<D>> save(@RequestBody @Valid D dto) {
         try {
-            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.save(mascotaDto)));
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.save(dto)));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
-
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<ControllerResponseDto<MascotaDto>> delete(@PathVariable Long id) {
+    public ResponseEntity<ControllerResponseDto<D>> delete(@PathVariable Long id) {
         try {
-            mascotaService.delete(id);
+            service.delete(id);
             return ResponseEntity.ok(ControllerResponseDto.fromValid(null));
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.CONSTRAIN_VIOLATION.toString()));
@@ -43,33 +35,28 @@ public class MacotaController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
-
     @PutMapping
-    public ResponseEntity<ControllerResponseDto<MascotaDto>> update(@RequestBody @Valid MascotaDto mascotaDto) {
+    public ResponseEntity<ControllerResponseDto<D>> update(@RequestBody @Valid D dto) {
         try {
-            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.update(mascotaDto)));
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.update(dto)));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
-
     @GetMapping
-    public ResponseEntity<ControllerResponseDto<List<MascotaDto>>> findAll() {
+    public ResponseEntity<ControllerResponseDto<List<D>>> findAll() {
         try {
-            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.findAll()));
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.findAll()));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
         }
     }
     @GetMapping(path = "/id/{id}")
-    public ResponseEntity<ControllerResponseDto<MascotaDto>> findById(@PathVariable Long id){
+    public ResponseEntity<ControllerResponseDto<D>> findById(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.findById(id)));
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.findById(id)));
         }catch (Exception ex){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
         }
-
     }
 }
-
-
