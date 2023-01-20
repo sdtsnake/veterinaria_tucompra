@@ -27,16 +27,17 @@ public class MascotaServiceImpl implements MascotaService {
 
     @Override
     public MascotaDto save(MascotaDto mascotaDto) {
+        validateNotExistMascotaById(mascotaDto.getId(), MessageResource.MASCOTA_ALREADY_EXISTS_ID.getValue().trim());
         validateExistUsuarioById(mascotaDto.getUsuario().getId(), MessageResource.USUARIO_NOT_EXISTS.getValue().trim());
         validateNameAndUsuarioId(mascotaDto.getUsuario().getId(), mascotaDto.getNombre());
         validaCampos(mascotaDto.getSexo());
-
         return mascotaMapper.toDto(mascotaRepository.save(mascotaMapper.toModel(mascotaDto)));
     }
 
     @Override
     public void delete(Long id) {
-
+        validateExistMascotaById(id, MessageResource.MASCOTA_NOT_EXISTS_DELETE.getValue().trim());
+        mascotaRepository.deleteById(id);
     }
 
     @Override
@@ -54,20 +55,32 @@ public class MascotaServiceImpl implements MascotaService {
         return null;
     }
 
-    private void validateNameAndUsuarioId(Long id, String nombre){
+    private void validateNameAndUsuarioId(Long id, String nombre) {
         List<Mascota> mascotaList = mascotaRepository.findAllByUsuarioId_Id(id);
-        for (Mascota m: mascotaList){
-            if(m.getNombre().trim().equalsIgnoreCase(nombre)){
+        for (Mascota m : mascotaList) {
+            if (m.getNombre().trim().equalsIgnoreCase(nombre)) {
                 throw new MascotaExeptionBadRequest(MessageResource.MASCOTA_ALREADY_EXISTS.getValue());
             }
         }
     }
+
     private void validaCampos(Integer sexo) {
         if (!sexoValido.contains(sexo)) {
             throw new MascotaExeptionBadRequest(MessageResource.MASCOTA_SEX_CODE_NOT_EXISTS.getValue());
         }
     }
+
     private void validateExistUsuarioById(Long id, String message) {
-        usuarioRepository.findById(id).orElseThrow(() -> new UsuarioExeptionBadRequest(message));
+        usuarioRepository.findById(id).orElseThrow(() -> new MascotaExeptionBadRequest(message));
     }
+
+    private void validateNotExistMascotaById(Long id, String message) {
+        if (mascotaRepository.findById(id).isPresent()) {
+            throw new MascotaExeptionBadRequest(message);
+        }
+    }
+    private void validateExistMascotaById(Long id, String message){
+        mascotaRepository.findById(id).orElseThrow(() -> new MascotaExeptionBadRequest(message));
+    }
+
 }

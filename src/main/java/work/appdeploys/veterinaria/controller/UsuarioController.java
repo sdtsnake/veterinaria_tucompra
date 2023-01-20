@@ -35,7 +35,7 @@ public class UsuarioController {
             usuarioService.delete(id);
             return ResponseEntity.ok(ControllerResponseDto.fromValid(null));
         }catch (DataIntegrityViolationException ex){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.USUARIO_CONSTRAIN_VIOLATION.toString()));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.CONSTRAIN_VIOLATION.toString()));
         }
         catch (Exception ex){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
