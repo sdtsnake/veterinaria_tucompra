@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import work.appdeploys.veterinaria.models.dtos.ColaboradorDto;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
-import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
 import work.appdeploys.veterinaria.services.ColaboradorServicio;
-import work.appdeploys.veterinaria.services.UsuarioService;
 
 @Tag(name="Colaborador")
 @RequiredArgsConstructor

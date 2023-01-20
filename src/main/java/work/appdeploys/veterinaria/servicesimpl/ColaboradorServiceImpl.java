@@ -1,13 +1,11 @@
 package work.appdeploys.veterinaria.servicesimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.ColaboradorMapper;
 import work.appdeploys.veterinaria.models.Colaborador;
-import work.appdeploys.veterinaria.models.Usuario;
 import work.appdeploys.veterinaria.models.dtos.ColaboradorDto;
 import work.appdeploys.veterinaria.repositories.ColaboradorRepository;
 import work.appdeploys.veterinaria.services.ColaboradorServicio;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 public class ColaboradorServiceImpl implements ColaboradorServicio {
     private final ColaboradorMapper colaboradorMapper;
     private final ColaboradorRepository colaboradorRepository;
-    public static Set<String> tipoDocumentoValido = new HashSet<>(Arrays.asList("CC", "TI", "RUT"));
+    protected static final Set<String> tipoDocumentoValido = new HashSet<>(Arrays.asList("CC", "TI", "RUT"));
     @Override
     public ColaboradorDto save(ColaboradorDto colaboradorDto) {
         if(!Objects.isNull(colaboradorDto.getId())){
