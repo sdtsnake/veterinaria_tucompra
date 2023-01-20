@@ -58,6 +58,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioMapper.toDto(usuario);
     }
+
+    @Override
+    public UsuarioDto findById(Long id) {
+        Usuario usuario = usuarioRepository
+                .findById(id)
+                .orElseThrow(() ->new UsuarioExeptionBadRequest(MessageResource.USUARIO_NOT_FOUND.getValue()));
+
+        return usuarioMapper.toDto(usuario);
+    }
+
     private void validateNotExistUsuarioById(Long id, String message) {
         if(usuarioRepository.findById(id).isPresent()){
             throw new UsuarioExeptionBadRequest(message);

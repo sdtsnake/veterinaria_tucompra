@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
 import work.appdeploys.veterinaria.models.dtos.MascotaDto;
+import work.appdeploys.veterinaria.models.dtos.UsuarioDto;
 import work.appdeploys.veterinaria.services.MascotaService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name = "Mascota")
 @RequiredArgsConstructor
@@ -50,4 +52,24 @@ public class MacotaController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
     }
+
+    @GetMapping
+    public ResponseEntity<ControllerResponseDto<List<MascotaDto>>> findAll() {
+        try {
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.findAll()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
+        }
+    }
+    @GetMapping(path = "/id/{id}")
+    public ResponseEntity<ControllerResponseDto<MascotaDto>> findById(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(mascotaService.findById(id)));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
+        }
+
+    }
 }
+
+

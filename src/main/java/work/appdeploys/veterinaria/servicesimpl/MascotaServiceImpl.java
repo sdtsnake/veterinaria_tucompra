@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
+import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.MascotaMapper;
 import work.appdeploys.veterinaria.models.Mascota;
+import work.appdeploys.veterinaria.models.Usuario;
 import work.appdeploys.veterinaria.models.dtos.MascotaDto;
 import work.appdeploys.veterinaria.repositories.MascotaRepository;
 import work.appdeploys.veterinaria.repositories.UsuarioRepository;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,14 +55,21 @@ public class MascotaServiceImpl implements MascotaService {
 
     @Override
     public List<MascotaDto> findAll() {
-        return null;
+        List<Mascota> mascotaList = mascotaRepository.findAll();
+        if(mascotaList.isEmpty()){
+            throw new MascotaExeptionBadRequest(MessageResource.MASCOTAS_NOT_FOUND.getValue());
+        }
+        return mascotaList.stream().map(mascotaMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<MascotaDto> findAllByDocumentoId(Integer idDocumento) {
-        return null;
-    }
+    public MascotaDto findById(Long id) {
+        Mascota mascota = mascotaRepository
+                .findById(id)
+                .orElseThrow(() ->new MascotaExeptionBadRequest(MessageResource.MASCOTAS_NOT_FOUND.getValue()));
 
+        return mascotaMapper.toDto(mascota);
+    }
     private void validateNameAndUsuarioId(Long id, String nombre) {
         List<Mascota> mascotaList = mascotaRepository.findAllByUsuarioId_Id(id);
         for (Mascota m : mascotaList) {

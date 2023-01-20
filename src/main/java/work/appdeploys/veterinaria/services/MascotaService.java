@@ -11,5 +11,5 @@ public interface MascotaService {
     void delete(Long id);
     MascotaDto update(MascotaDto mascotaDto);
     List<MascotaDto> findAll();
-    List<MascotaDto> findAllByDocumentoId(Integer idDocumento);
+    MascotaDto findById(Long id);
 }

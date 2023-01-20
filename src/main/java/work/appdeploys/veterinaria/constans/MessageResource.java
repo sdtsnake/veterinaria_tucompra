@@ -13,6 +13,7 @@ public enum MessageResource {
     MASCOTA_ALREADY_EXISTS_ID ("La mascota ya esta registrada en la base de datos por id"),
     MASCOTA_NOT_EXISTS_DELETE ("La mascota no esta en la base de datos por ese id no se puede borrar"),
     MASCOTA_NOT_EXISTS ("La mascota no esta en la base de datos"),
+    MASCOTAS_NOT_FOUND ("No existen macotas para listar"),
 
 
     CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar");

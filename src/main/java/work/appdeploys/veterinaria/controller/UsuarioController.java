@@ -57,7 +57,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
         }
     }
-    @GetMapping(path = "/{documentoId}")
+    @GetMapping(path = "/documentoid/{documentoId}")
     public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@PathVariable Integer documentoId){
         try{
             return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.findByDocumentoId(documentoId)));
@@ -66,4 +66,14 @@ public class UsuarioController {
         }
 
     }
+    @GetMapping(path = "/id/{id}")
+    public ResponseEntity<ControllerResponseDto<UsuarioDto>> update(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(usuarioService.findById(id)));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
+        }
+
+    }
 }
+
