@@ -18,6 +18,15 @@ public enum MessageResource {
     HISTORIA_CLINICA_ALREADY_EXISTS ("Ya exite historia clinica en la base de datos"),
     HISTORIA_CLINICA_MASCOTA_ALREADY_EXISTS ("Macota ya tiene historia clinica"),
     HISTORIA_CLINICA_NOT_FOUND ("No existe historia clinica para listar"),
+    COLABORADOR_ALREADY_EXISTS ("El colaborador ya esta registrado"),
+    COLABORADOR_DOCUMENT_ID_ALREADY_EXISTS ("Numero de documento ya esta en otro colaborador"),
+    COLABORADOR_DOCUMENT_TYPE_NOT_EXISTS ("Tipo de identificaion no catalagado del colaborador"),
+    COLABORADOR_NOT_EXISTS_DELETE ("El colaborador no esta en la base de datos, no se puede eliminar"),
+    COLABORADOR_NOT_FOUND ("No existen colaboradores para listar"),
+    NAME_NULL ("El nombre se encuentra en blanco"),
+    LAST_NAME_NULL ("El apellido se encuentra en blanco"),
+    CONDITION_NULL ("El estado se encuentra en blanco"),
+    POSITION_NULL("El cargo se encuentra en blanco"),
 
     CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar"),
     DATE_NOT_VALID("Fecha no valida");

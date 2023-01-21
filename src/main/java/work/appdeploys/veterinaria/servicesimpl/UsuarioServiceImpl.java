@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             validateNotExistUsuarioById(usuarioDto.getId(), MessageResource.USUARIO_ALREADY_EXISTS.getValue());
         }
         validateExistUsuarioByDocumentId(usuarioDto.getDocumentoId(),MessageResource.USUARIO_DOCUMENT_ID_ALREADY_EXISTS.getValue());
-        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo());
+        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo(),usuarioDto.getNombre(),usuarioDto.getApellido(),usuarioDto.getEstado());
         return usuarioMapper.toDto(usuarioRepository.save(usuarioMapper.toModel(usuarioDto)));
     }
 
@@ -44,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDto update(UsuarioDto usuarioDto) {
-        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo());
+        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo(),usuarioDto.getNombre(),usuarioDto.getApellido(),usuarioDto.getEstado());
         validateExistUsuarioByDocumentId(usuarioDto.getDocumentoId(),usuarioDto.getId(),MessageResource.USUARIO_DOCUMENT_ID_ALREADY_EXISTS.getValue());
         return usuarioMapper.toDto(usuarioRepository.save(usuarioMapper.toModel(usuarioDto)));
     }
@@ -96,12 +95,21 @@ public class UsuarioServiceImpl implements UsuarioService {
     private void validateExistUsuarioById(Long id, String message) {
         usuarioRepository.findById(id).orElseThrow(() -> new UsuarioExeptionBadRequest(message));
     }
-    private void validaCampos(String tipoDocumento, Integer sexo) {
+    private void validaCampos(String tipoDocumento, Integer sexo, String nombre, String apellido,String condition) {
         if (!tipoDocumentoValido.contains(tipoDocumento)) {
             throw new UsuarioExeptionBadRequest(MessageResource.USUARIO_DOCUMENT_TYPE_NOT_EXISTS.getValue());
         }
         if (!sexoValido.contains(sexo)) {
             throw new UsuarioExeptionBadRequest(MessageResource.USUARIO_SEX_CODE_NOT_EXISTS.getValue());
+        }
+        if(nombre.isEmpty()){
+            throw new UsuarioExeptionBadRequest(MessageResource.NAME_NULL.getValue());
+        }
+        if(apellido.isEmpty()){
+            throw new UsuarioExeptionBadRequest(MessageResource.LAST_NAME_NULL.getValue());
+        }
+        if(condition.isEmpty()){
+            throw new UsuarioExeptionBadRequest(MessageResource.CONDITION_NULL.getValue());
         }
 
     }
