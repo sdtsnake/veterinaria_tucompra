@@ -21,14 +21,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MascotaServiceImpl implements MascotaService {
-
     private final MascotaMapper mascotaMapper;
     private final MascotaRepository mascotaRepository;
     private final UsuarioRepository usuarioRepository;
-
     public final Set<Integer> sexoValido = new HashSet<>(Arrays.asList(0, 1));
-
-
     @Override
     public MascotaDto save(MascotaDto mascotaDto) {
         if(!Objects.isNull(mascotaDto.getId())){
@@ -39,13 +35,11 @@ public class MascotaServiceImpl implements MascotaService {
         validaCampos(mascotaDto.getSexo());
         return mascotaMapper.toDto(mascotaRepository.save(mascotaMapper.toModel(mascotaDto)));
     }
-
     @Override
     public void delete(Long id) {
         validateExistMascotaById(id, MessageResource.MASCOTA_NOT_EXISTS_DELETE.getValue().trim());
         mascotaRepository.deleteById(id);
     }
-
     @Override
     public MascotaDto update(MascotaDto mascotaDto) {
         validateExistMascotaById(mascotaDto.getId(), MessageResource.MASCOTA_NOT_EXISTS.getValue().trim());
@@ -53,7 +47,6 @@ public class MascotaServiceImpl implements MascotaService {
         validateNameAndUsuarioId(mascotaDto.getUsuario().getId(), mascotaDto.getNombre());
         return mascotaMapper.toDto(mascotaRepository.save(mascotaMapper.toModel(mascotaDto)));
     }
-
     @Override
     public List<MascotaDto> findAll() {
         List<Mascota> mascotaList = mascotaRepository.findAll();
@@ -62,7 +55,6 @@ public class MascotaServiceImpl implements MascotaService {
         }
         return mascotaList.stream().map(mascotaMapper::toDto).collect(Collectors.toList());
     }
-
     @Override
     public MascotaDto findById(Long id) {
         Mascota mascota = mascotaRepository
@@ -79,17 +71,14 @@ public class MascotaServiceImpl implements MascotaService {
             }
         }
     }
-
     private void validaCampos(Integer sexo) {
         if (!sexoValido.contains(sexo)) {
             throw new MascotaExeptionBadRequest(MessageResource.MASCOTA_SEX_CODE_NOT_EXISTS.getValue());
         }
     }
-
     private void validateExistUsuarioById(Long id, String message) {
         usuarioRepository.findById(id).orElseThrow(() -> new MascotaExeptionBadRequest(message));
     }
-
     private void validateNotExistMascotaById(Long id, String message) {
         if (mascotaRepository.findById(id).isPresent()) {
             throw new MascotaExeptionBadRequest(message);

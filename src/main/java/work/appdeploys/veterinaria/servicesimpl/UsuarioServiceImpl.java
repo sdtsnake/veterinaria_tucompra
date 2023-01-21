@@ -31,19 +31,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             validateNotExistUsuarioById(usuarioDto.getId(), MessageResource.USUARIO_ALREADY_EXISTS.getValue());
         }
         validateExistUsuarioByDocumentId(usuarioDto.getDocumentoId(),MessageResource.USUARIO_DOCUMENT_ID_ALREADY_EXISTS.getValue());
-        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo(),usuarioDto.getNombre(),usuarioDto.getApellido(),usuarioDto.getEstado());
+        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo());
         return usuarioMapper.toDto(usuarioRepository.save(usuarioMapper.toModel(usuarioDto)));
     }
-
     @Override
     public void delete(Long id) {
         validateExistUsuarioById(id, MessageResource.USUARIO_NOT_EXISTS_DELETE.getValue());
         usuarioRepository.deleteById(id);
     }
-
     @Override
     public UsuarioDto update(UsuarioDto usuarioDto) {
-        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo(),usuarioDto.getNombre(),usuarioDto.getApellido(),usuarioDto.getEstado());
+        validaCampos(usuarioDto.getTipoDocumento(), usuarioDto.getSexo());
         validateExistUsuarioByDocumentId(usuarioDto.getDocumentoId(),usuarioDto.getId(),MessageResource.USUARIO_DOCUMENT_ID_ALREADY_EXISTS.getValue());
         return usuarioMapper.toDto(usuarioRepository.save(usuarioMapper.toModel(usuarioDto)));
     }
@@ -73,7 +71,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioMapper.toDto(usuario);
     }
-
     private void validateNotExistUsuarioById(Long id, String message) {
         if(usuarioRepository.findById(id).isPresent()){
             throw new UsuarioExeptionBadRequest(message);
@@ -95,24 +92,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     private void validateExistUsuarioById(Long id, String message) {
         usuarioRepository.findById(id).orElseThrow(() -> new UsuarioExeptionBadRequest(message));
     }
-    private void validaCampos(String tipoDocumento, Integer sexo, String nombre, String apellido,String condition) {
+    private void validaCampos(String tipoDocumento, Integer sexo) {
         if (!tipoDocumentoValido.contains(tipoDocumento)) {
             throw new UsuarioExeptionBadRequest(MessageResource.USUARIO_DOCUMENT_TYPE_NOT_EXISTS.getValue());
         }
         if (!sexoValido.contains(sexo)) {
             throw new UsuarioExeptionBadRequest(MessageResource.USUARIO_SEX_CODE_NOT_EXISTS.getValue());
         }
-        if(nombre.isEmpty()){
-            throw new UsuarioExeptionBadRequest(MessageResource.NAME_NULL.getValue());
-        }
-        if(apellido.isEmpty()){
-            throw new UsuarioExeptionBadRequest(MessageResource.LAST_NAME_NULL.getValue());
-        }
-        if(condition.isEmpty()){
-            throw new UsuarioExeptionBadRequest(MessageResource.CONDITION_NULL.getValue());
-        }
-
     }
-
-
 }

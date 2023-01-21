@@ -29,7 +29,7 @@ public class ColaboradorServiceImpl implements ColaboradorServicio {
             validateNotExistUsuarioById(colaboradorDto.getId(), MessageResource.COLABORADOR_ALREADY_EXISTS.getValue());
         }
         validateExistUsuarioByDocumentId(colaboradorDto.getDocumentoIdentificacion(),MessageResource.COLABORADOR_DOCUMENT_ID_ALREADY_EXISTS.getValue());
-        validaCampos(colaboradorDto.getTipoDocumento(),colaboradorDto.getNombre(),colaboradorDto.getApellido(),colaboradorDto.getCargo());
+        validaCampos(colaboradorDto.getTipoDocumento());
         return colaboradorMapper.toDto(colaboradorRepository.save(colaboradorMapper.toModel(colaboradorDto)));
     }
     @Override
@@ -39,7 +39,7 @@ public class ColaboradorServiceImpl implements ColaboradorServicio {
     }
     @Override
     public ColaboradorDto update(ColaboradorDto colaboradorDto) {
-        validaCampos(colaboradorDto.getTipoDocumento(),colaboradorDto.getNombre(),colaboradorDto.getApellido(),colaboradorDto.getCargo());
+        validaCampos(colaboradorDto.getTipoDocumento());
         validateExistUsuarioByDocumentId(colaboradorDto.getDocumentoIdentificacion(),colaboradorDto.getId(),MessageResource.COLABORADOR_NOT_EXISTS_DELETE.getValue());
         return colaboradorMapper.toDto(colaboradorRepository.save(colaboradorMapper.toModel(colaboradorDto)));
     }
@@ -74,18 +74,9 @@ public class ColaboradorServiceImpl implements ColaboradorServicio {
             throw new UsuarioExeptionBadRequest(message);
         }
     }
-    private void validaCampos(String tipoDocumento, String nombre, String apellido,String position) {
+    private void validaCampos(String tipoDocumento){
         if (!tipoDocumentoValido.contains(tipoDocumento)) {
             throw new UsuarioExeptionBadRequest(MessageResource.COLABORADOR_DOCUMENT_TYPE_NOT_EXISTS.getValue());
-        }
-        if(nombre.isEmpty()){
-            throw new UsuarioExeptionBadRequest(MessageResource.NAME_NULL.getValue());
-        }
-        if(apellido.isEmpty()){
-            throw new UsuarioExeptionBadRequest(MessageResource.LAST_NAME_NULL.getValue());
-        }
-        if(position.isEmpty()){
-            throw new UsuarioExeptionBadRequest(MessageResource.POSITION_NULL.getValue());
         }
     }
     private void validateExistColaboradorById(Long id, String message) {
