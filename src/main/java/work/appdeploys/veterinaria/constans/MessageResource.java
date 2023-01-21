@@ -23,11 +23,15 @@ public enum MessageResource {
     COLABORADOR_DOCUMENT_TYPE_NOT_EXISTS ("Tipo de identificaion no catalagado del colaborador"),
     COLABORADOR_NOT_EXISTS_DELETE ("El colaborador no esta en la base de datos, no se puede eliminar"),
     COLABORADOR_NOT_FOUND ("No existen colaboradores para listar"),
+    COLABORADOR_NOT_EXISTS("El colaborador no esta en la base de datos por ese id"),
     NAME_NULL ("El nombre se encuentra en blanco"),
     LAST_NAME_NULL ("El apellido se encuentra en blanco"),
     CONDITION_NULL ("El estado se encuentra en blanco"),
     POSITION_NULL("El cargo se encuentra en blanco"),
-
+    HISTORIA_DETALLE_CLINICA_ALREADY_EXISTS("Ya exite ese id detalle de la historia clinica en la base de datos"),
+    HISTORIA_DETALLE_CLINICA_NOT_EXISTS("No exite ese id detalle de la historia clinica en la base de datos"),
+    HISTORIA_DETALLE_CLINICA_INVALID_DATE_TIME("Fecha y hora del detalle de la historia clinica no es valido"),
+    DETALLE_HISTORIA_CLINICA_NOT_FOUND ("No existe detalle de historia la clinica para listar"),
     CONSTRAIN_VIOLATION("Existen relacion contras tablas no se puede eliminar"),
     DATE_NOT_VALID("Fecha no valida");
     private String value;

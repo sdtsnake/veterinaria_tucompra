@@ -18,7 +18,6 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @RequiredArgsConstructor
-
 public class Colaborador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,4 @@ public class Colaborador {
     private String tipoDocumento;
     @Column(name = "documento_identificacion")
     private Integer documentoIdentificacion;
-
-
-
 }
