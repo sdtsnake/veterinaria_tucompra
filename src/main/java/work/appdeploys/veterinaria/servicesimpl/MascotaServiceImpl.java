@@ -1,6 +1,7 @@
 package work.appdeploys.veterinaria.servicesimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration;
 import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
@@ -61,6 +62,12 @@ public class MascotaServiceImpl implements MascotaService {
             throw new MascotaExeptionBadRequest(MessageResource.MASCOTAS_NOT_FOUND.getValue());
         }
         return mascotaList.stream().map(mascotaMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MascotaDto> findAllSinHistoria() {
+
+        return mascotaRepository.findAllByMascotasSinHistoria().stream().map(mascotaMapper::toDto).collect(Collectors.toList());
     }
 
     @Override

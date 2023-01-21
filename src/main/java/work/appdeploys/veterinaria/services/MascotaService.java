@@ -10,5 +10,6 @@ public interface MascotaService extends CRUDService<MascotaDto>{
     void delete(Long id);
     MascotaDto update(MascotaDto mascotaDto);
     List<MascotaDto> findAll();
+    List<MascotaDto> findAllSinHistoria();
     MascotaDto findById(Long id);
 }
