@@ -26,7 +26,7 @@ public class Colaborador {
     private String nombre;
     private String apellido;
     private String cargo;
-    private String espcialidad;
+    private String especialidad;
     @Column(name = "tipo_documento")
     private String tipoDocumento;
     @Column(name = "documento_identificacion")

@@ -17,7 +17,7 @@ public class ColaboradorDto implements Serializable {
     @Schema(description = "Cargo del colaborador",example = "Zootecnista")
     private final String cargo;
     @Schema(description = "Especialidad del colaborador no es requerido",example = "Traumatologa canino")
-    private final String espcialidad;
+    private final String especialidad;
     @Schema(description = "Tipos de identificacion del usuario los cuales pueden " +
             "tener los sigientes valoes CC=Cedula,TI=Tarjeta de identificaion," +
             "RUT=Registro unico tributario",example = "CC")
