@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @RequiredArgsConstructor
-
 public class Colaborador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

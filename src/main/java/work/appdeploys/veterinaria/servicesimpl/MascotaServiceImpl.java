@@ -56,6 +56,12 @@ public class MascotaServiceImpl implements MascotaService {
         return mascotaList.stream().map(mascotaMapper::toDto).collect(Collectors.toList());
     }
     @Override
+    public List<MascotaDto> findAllSinHistoria() {
+
+        return mascotaRepository.findAllByMascotasSinHistoria().stream().map(mascotaMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
     public MascotaDto findById(Long id) {
         Mascota mascota = mascotaRepository
                 .findById(id)

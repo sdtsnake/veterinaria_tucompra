@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-@Schema(description = "Mascotas")
+@Schema(description = "Historia Clinica")
 public class HistoriaClinicaDto {
 
     @Schema(description = "Id de la tabla auto incremental",example = "1")
