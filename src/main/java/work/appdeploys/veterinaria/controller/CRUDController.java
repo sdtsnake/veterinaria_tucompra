@@ -35,7 +35,7 @@ public abstract class CRUDController <D,S extends CRUDService<D>>  {
             service.delete(id);
             return ResponseEntity.ok(ControllerResponseDto.fromValid(null));
         } catch (DataIntegrityViolationException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.CONSTRAIN_VIOLATION.toString()));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(MessageResource.CONSTRAIN_VIOLATION.getValue()));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }
