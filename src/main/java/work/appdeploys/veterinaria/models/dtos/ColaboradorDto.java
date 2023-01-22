@@ -3,8 +3,6 @@ package work.appdeploys.veterinaria.models.dtos;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
 @Schema(description = "Colaboradores")
 public class ColaboradorDto {

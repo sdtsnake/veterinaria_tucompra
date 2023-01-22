@@ -9,12 +9,10 @@ import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
 import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.DetalleHistoriaClinicaMapper;
 import work.appdeploys.veterinaria.models.DetalleHistoriaClinica;
-import work.appdeploys.veterinaria.models.HistoriaClinica;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
 import work.appdeploys.veterinaria.repositories.ColaboradorRepository;
 import work.appdeploys.veterinaria.repositories.DetalleHistoriaClinicaRepository;
 import work.appdeploys.veterinaria.repositories.HistoriaClinicaRepository;
-import work.appdeploys.veterinaria.repositories.MascotaRepository;
 import work.appdeploys.veterinaria.services.DetalleHistoriaClinicaService;
 
 import java.util.List;

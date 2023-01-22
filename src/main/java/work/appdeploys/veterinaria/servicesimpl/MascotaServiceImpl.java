@@ -1,7 +1,6 @@
 package work.appdeploys.veterinaria.servicesimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration;
 import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
