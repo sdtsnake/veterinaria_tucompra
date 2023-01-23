@@ -26,7 +26,7 @@ public class DetalleHistoriaClinicaDto {
     private String habitad;
     @Schema(description = "Observaciones", example = "Paciente registra sobre peso se recomienta alimentacion especializada")
     private String observacion;
-    @Schema(description = "Numero de id del colaborador", example = "1")
+    @Schema(description = "Numero de id del colaborador")
     private ColaboradorDto colaborador;
     @Schema(description = "Numero de id de la historia clinica", example = "2")
     private HistoriaClinicaDto historiaClinica;
