@@ -15,4 +15,6 @@ public interface DetalleHistoriaClinicaService extends CRUDService<DetalleHistor
     List<DetalleHistoriaClinicaDto> findAll();
     @Override
     DetalleHistoriaClinicaDto findById(Long id);
+
+    List<DetalleHistoriaClinicaDto> findAllByHistoriaId(Long idHistoriClinica);
 }
