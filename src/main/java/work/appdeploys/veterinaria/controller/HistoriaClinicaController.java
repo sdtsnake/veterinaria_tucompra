@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
-import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
 import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaDto;
 import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaPostDto;
 import work.appdeploys.veterinaria.services.HistoriaClinicaService;

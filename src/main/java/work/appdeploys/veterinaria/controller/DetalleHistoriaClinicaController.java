@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import work.appdeploys.veterinaria.models.dtos.ColaboradorDto;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPostDto;
@@ -19,7 +18,6 @@ import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPutDto;
 import work.appdeploys.veterinaria.services.DetalleHistoriaClinicaService;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "Detalle Historia Clinica")
