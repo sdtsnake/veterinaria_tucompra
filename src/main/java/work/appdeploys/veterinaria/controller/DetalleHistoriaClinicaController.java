@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import work.appdeploys.veterinaria.models.dtos.ColaboradorDto;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
+import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPostDto;
 import work.appdeploys.veterinaria.services.DetalleHistoriaClinicaService;
 
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ import java.util.List;
 @RestController
 public class DetalleHistoriaClinicaController extends CRUDController<DetalleHistoriaClinicaDto, DetalleHistoriaClinicaService> {
     @PostMapping
-    public ResponseEntity<ControllerResponseDto<DetalleHistoriaClinicaDto>> save(@RequestBody @Valid DetalleHistoriaClinicaDto dto) {
+    public ResponseEntity<ControllerResponseDto<DetalleHistoriaClinicaDto>> save(@RequestBody @Valid DetalleHistoriaClinicaPostDto dto) {
         try {
             return ResponseEntity.ok(ControllerResponseDto.fromValid(service.save(dto)));
         } catch (Exception ex) {

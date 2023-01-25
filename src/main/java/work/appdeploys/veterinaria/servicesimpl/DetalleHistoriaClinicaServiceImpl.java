@@ -9,8 +9,10 @@ import work.appdeploys.veterinaria.exceptions.HistoriaClinicaExeptionBadRequest;
 import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
 import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.DetalleHistoriaClinicaMapper;
+import work.appdeploys.veterinaria.mappers.DetalleHistoriaClinicaSaveMapper;
 import work.appdeploys.veterinaria.models.DetalleHistoriaClinica;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
+import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPostDto;
 import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaDto;
 import work.appdeploys.veterinaria.repositories.ColaboradorRepository;
 import work.appdeploys.veterinaria.repositories.DetalleHistoriaClinicaRepository;
@@ -26,20 +28,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DetalleHistoriaClinicaServiceImpl implements DetalleHistoriaClinicaService {
     private final DetalleHistoriaClinicaMapper detalleHistoriaClinicaMapper;
+    private final DetalleHistoriaClinicaSaveMapper detalleHistoriaClinicaSaveMapper;
     private final DetalleHistoriaClinicaRepository detalleHistoriaClinicaRepository;
     private final ColaboradorRepository colaboradorRepository;
-
     private final HistoriaClinicaRepository historiaClinicaRepository;
 
     @Override
-    public DetalleHistoriaClinicaDto save(DetalleHistoriaClinicaDto detalleHistoriaClinicaDto) {
-        if (!Objects.isNull(detalleHistoriaClinicaDto.getId())) {
-            validateNotExistDetalleHistoriaClinicaById(detalleHistoriaClinicaDto.getId(), MessageResource.HISTORIA_DETALLE_CLINICA_ALREADY_EXISTS.getValue().trim());
-        }
-        dateTimeValidator(detalleHistoriaClinicaDto.getFechaHora().toString(), MessageResource.HISTORIA_DETALLE_CLINICA_INVALID_DATE_TIME.getValue().trim());
-        validateExistHistoriaClinica(detalleHistoriaClinicaDto.getHistoriaClinica().getId(), MessageResource.HISTORIA_CLINICA_NOT_EXISTS.getValue().trim());
-        validateExistColaboradorById(detalleHistoriaClinicaDto.getColaborador().getId(), MessageResource.COLABORADOR_NOT_EXISTS.getValue().trim());
-        return detalleHistoriaClinicaMapper.toDto(detalleHistoriaClinicaRepository.save(detalleHistoriaClinicaMapper.toModel(detalleHistoriaClinicaDto)));
+    public DetalleHistoriaClinicaDto save(DetalleHistoriaClinicaPostDto detalleHistoriaClinicaPostDto) {
+        dateTimeValidator(detalleHistoriaClinicaPostDto.getFechaHora().toString(), MessageResource.HISTORIA_DETALLE_CLINICA_INVALID_DATE_TIME.getValue().trim());
+        validateExistHistoriaClinica(detalleHistoriaClinicaPostDto.getIdHistoriaClinica(), MessageResource.HISTORIA_CLINICA_NOT_EXISTS.getValue().trim());
+        validateExistColaboradorById(detalleHistoriaClinicaPostDto.getIdColaborador(), MessageResource.COLABORADOR_NOT_EXISTS.getValue().trim());
+        DetalleHistoriaClinica detalleHistoriaClinica = detalleHistoriaClinicaRepository.save(detalleHistoriaClinicaSaveMapper.toModel(detalleHistoriaClinicaPostDto));
+        detalleHistoriaClinica.setColaborador(colaboradorRepository.findById(detalleHistoriaClinica.getColaborador().getId()).get());
+        detalleHistoriaClinica.setHistoriaClinica(historiaClinicaRepository.findById(detalleHistoriaClinica.getHistoriaClinica().getId()).get());
+        return detalleHistoriaClinicaMapper.toDto(detalleHistoriaClinica);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package work.appdeploys.veterinaria.services;
 
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
+import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPostDto;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface DetalleHistoriaClinicaService extends CRUDService<DetalleHistor
     @Override
     DetalleHistoriaClinicaDto findById(Long id);
     List<DetalleHistoriaClinicaDto> findAllByHistoriaId(Long idHistoriClinica);
-    DetalleHistoriaClinicaDto save(DetalleHistoriaClinicaDto detalleHistoriaClinicaDto);
+    DetalleHistoriaClinicaDto save(DetalleHistoriaClinicaPostDto detalleHistoriaClinicaPostDto);
 }

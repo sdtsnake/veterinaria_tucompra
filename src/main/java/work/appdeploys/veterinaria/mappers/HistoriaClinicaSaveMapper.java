@@ -12,5 +12,5 @@ public class HistoriaClinicaSaveMapper {
         historiaClinica.setFechaCreacion(historiaClinicaPostDto.getFechaCreacion());
         historiaClinica.setMascota(new Mascota(historiaClinicaPostDto.getIdMascota()));
         return historiaClinica;
-    };
+    }
 }
