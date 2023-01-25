@@ -34,15 +34,6 @@ public abstract class CRUDController<D, S extends CRUDService<D>> {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<ControllerResponseDto<D>> update(@RequestBody @Valid D dto) {
-        try {
-            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.update(dto)));
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
-        }
-    }
-
     @GetMapping
     public ResponseEntity<ControllerResponseDto<List<D>>> findAll() {
         try {

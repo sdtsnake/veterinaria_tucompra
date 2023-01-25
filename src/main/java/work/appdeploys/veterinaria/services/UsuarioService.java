@@ -8,11 +8,10 @@ public interface UsuarioService extends CRUDService<UsuarioDto> {
     @Override
     void delete(Long id);
     @Override
-    UsuarioDto update(UsuarioDto usuarioDto);
-    @Override
     List<UsuarioDto> findAll();
     @Override
     UsuarioDto findById(Long id);
     UsuarioDto findByDocumentoId(Integer idDocumento);
     UsuarioDto save(UsuarioDto usuarioDto);
+    UsuarioDto update(UsuarioDto usuarioDto);
 }

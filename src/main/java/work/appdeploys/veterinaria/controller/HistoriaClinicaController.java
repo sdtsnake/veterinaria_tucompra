@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import work.appdeploys.veterinaria.models.dtos.ControllerResponseDto;
+import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
 import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaDto;
 import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaPostDto;
 import work.appdeploys.veterinaria.services.HistoriaClinicaService;
@@ -29,7 +31,14 @@ public class HistoriaClinicaController extends CRUDController<HistoriaClinicaDto
         }
     }
 
-
+    @PutMapping
+    public ResponseEntity<ControllerResponseDto<HistoriaClinicaDto>> update(@RequestBody @Valid HistoriaClinicaDto dto) {
+        try {
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.update(dto)));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
+        }
+    }
 }
 
 

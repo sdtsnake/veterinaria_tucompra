@@ -6,29 +6,26 @@ import org.springframework.stereotype.Service;
 import work.appdeploys.veterinaria.constans.MessageResource;
 import work.appdeploys.veterinaria.exceptions.DetalleHistoriaClinicaExeptionBadRequest;
 import work.appdeploys.veterinaria.exceptions.HistoriaClinicaExeptionBadRequest;
-import work.appdeploys.veterinaria.exceptions.MascotaExeptionBadRequest;
 import work.appdeploys.veterinaria.exceptions.UsuarioExeptionBadRequest;
 import work.appdeploys.veterinaria.mappers.DetalleHistoriaClinicaMapper;
-import work.appdeploys.veterinaria.mappers.DetalleHistoriaClinicaSaveMapper;
+import work.appdeploys.veterinaria.mappers.DetalleHistoriaClinicaStructuresMapper;
 import work.appdeploys.veterinaria.models.DetalleHistoriaClinica;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaDto;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPostDto;
-import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaDto;
+import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPutDto;
 import work.appdeploys.veterinaria.repositories.ColaboradorRepository;
 import work.appdeploys.veterinaria.repositories.DetalleHistoriaClinicaRepository;
 import work.appdeploys.veterinaria.repositories.HistoriaClinicaRepository;
 import work.appdeploys.veterinaria.services.DetalleHistoriaClinicaService;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DetalleHistoriaClinicaServiceImpl implements DetalleHistoriaClinicaService {
     private final DetalleHistoriaClinicaMapper detalleHistoriaClinicaMapper;
-    private final DetalleHistoriaClinicaSaveMapper detalleHistoriaClinicaSaveMapper;
+    private final DetalleHistoriaClinicaStructuresMapper detalleHistoriaClinicaStructuresMapper;
     private final DetalleHistoriaClinicaRepository detalleHistoriaClinicaRepository;
     private final ColaboradorRepository colaboradorRepository;
     private final HistoriaClinicaRepository historiaClinicaRepository;
@@ -38,7 +35,7 @@ public class DetalleHistoriaClinicaServiceImpl implements DetalleHistoriaClinica
         dateTimeValidator(detalleHistoriaClinicaPostDto.getFechaHora().toString(), MessageResource.HISTORIA_DETALLE_CLINICA_INVALID_DATE_TIME.getValue().trim());
         validateExistHistoriaClinica(detalleHistoriaClinicaPostDto.getIdHistoriaClinica(), MessageResource.HISTORIA_CLINICA_NOT_EXISTS.getValue().trim());
         validateExistColaboradorById(detalleHistoriaClinicaPostDto.getIdColaborador(), MessageResource.COLABORADOR_NOT_EXISTS.getValue().trim());
-        DetalleHistoriaClinica detalleHistoriaClinica = detalleHistoriaClinicaRepository.save(detalleHistoriaClinicaSaveMapper.toModel(detalleHistoriaClinicaPostDto));
+        DetalleHistoriaClinica detalleHistoriaClinica = detalleHistoriaClinicaRepository.save(detalleHistoriaClinicaStructuresMapper.toModel(detalleHistoriaClinicaPostDto));
         detalleHistoriaClinica.setColaborador(colaboradorRepository.findById(detalleHistoriaClinica.getColaborador().getId()).get());
         detalleHistoriaClinica.setHistoriaClinica(historiaClinicaRepository.findById(detalleHistoriaClinica.getHistoriaClinica().getId()).get());
         return detalleHistoriaClinicaMapper.toDto(detalleHistoriaClinica);
@@ -51,12 +48,13 @@ public class DetalleHistoriaClinicaServiceImpl implements DetalleHistoriaClinica
     }
 
     @Override
-    public DetalleHistoriaClinicaDto update(DetalleHistoriaClinicaDto detalleHistoriaClinicaDto) {
-        validateExistDetalleHistoriaClinica(detalleHistoriaClinicaDto.getId(), MessageResource.HISTORIA_DETALLE_CLINICA_NOT_EXISTS.getValue());
-        dateTimeValidator(detalleHistoriaClinicaDto.getFechaHora().toString(), MessageResource.HISTORIA_DETALLE_CLINICA_INVALID_DATE_TIME.getValue().trim());
-        validateExistHistoriaClinica(detalleHistoriaClinicaDto.getHistoriaClinica().getId(), MessageResource.HISTORIA_CLINICA_NOT_EXISTS.getValue().trim());
-        validateExistColaboradorById(detalleHistoriaClinicaDto.getColaborador().getId(), MessageResource.COLABORADOR_NOT_EXISTS.getValue().trim());
-        return detalleHistoriaClinicaMapper.toDto(detalleHistoriaClinicaRepository.save(detalleHistoriaClinicaMapper.toModel(detalleHistoriaClinicaDto)));
+    public DetalleHistoriaClinicaDto update(DetalleHistoriaClinicaPutDto detalleHistoriaClinicaPutDto) {
+        validateExistDetalleHistoriaClinica(detalleHistoriaClinicaPutDto.getId(), MessageResource.HISTORIA_DETALLE_CLINICA_NOT_EXISTS.getValue());
+        dateTimeValidator(detalleHistoriaClinicaPutDto.getFechaHora().toString(), MessageResource.HISTORIA_DETALLE_CLINICA_INVALID_DATE_TIME.getValue().trim());
+        validateExistHistoriaClinica(detalleHistoriaClinicaPutDto.getIdHistoriaClinica(), MessageResource.HISTORIA_CLINICA_NOT_EXISTS.getValue().trim());
+        validateExistColaboradorById(detalleHistoriaClinicaPutDto.getIdColaborador(), MessageResource.COLABORADOR_NOT_EXISTS.getValue().trim());
+        DetalleHistoriaClinica detalleHistoriaClinica = detalleHistoriaClinicaRepository.save(detalleHistoriaClinicaStructuresMapper.toModel(detalleHistoriaClinicaPutDto));
+        return detalleHistoriaClinicaMapper.toDto(caragaModelo(detalleHistoriaClinica));
     }
 
     @Override
@@ -86,12 +84,6 @@ public class DetalleHistoriaClinicaServiceImpl implements DetalleHistoriaClinica
         return detalleHistoriaClinicaList.stream().map(detalleHistoriaClinicaMapper::toDto).collect(Collectors.toList());
     }
 
-    private void validateNotExistDetalleHistoriaClinicaById(Long id, String message) {
-        if (detalleHistoriaClinicaRepository.findById(id).isPresent()) {
-            throw new DetalleHistoriaClinicaExeptionBadRequest(message);
-        }
-    }
-
     public void dateTimeValidator(String date, String message) {
         DateValidator validator = DateValidator.getInstance();
         if (!validator.isValid(date, "yyyy-MM-dd'T'HH:mm:ss.SSS")) {
@@ -111,5 +103,9 @@ public class DetalleHistoriaClinicaServiceImpl implements DetalleHistoriaClinica
         colaboradorRepository.findById(id).orElseThrow(() -> new UsuarioExeptionBadRequest(message));
     }
 
-
+    private DetalleHistoriaClinica caragaModelo(DetalleHistoriaClinica detalleHistoriaClinica) {
+        detalleHistoriaClinica.setHistoriaClinica(historiaClinicaRepository.findById(detalleHistoriaClinica.getHistoriaClinica().getId()).get());
+        detalleHistoriaClinica.setColaborador(colaboradorRepository.findById(detalleHistoriaClinica.getColaborador().getId()).get());
+        return detalleHistoriaClinica;
+    }
 }

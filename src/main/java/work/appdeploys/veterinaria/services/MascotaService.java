@@ -8,11 +8,10 @@ public interface MascotaService extends CRUDService<MascotaDto>{
     @Override
     void delete(Long id);
     @Override
-    MascotaDto update(MascotaDto mascotaDto);
-    @Override
     List<MascotaDto> findAll();
     @Override
     MascotaDto findById(Long id);
     List<MascotaDto> findAllSinHistoria();
     MascotaDto save(MascotaDto mascotaDto);
+    MascotaDto update(MascotaDto mascotaDto);
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,14 @@ public class MascotaController extends CRUDController<MascotaDto, MascotaService
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ControllerResponseDto.fromError(ex));
         }
     }
-
+    @PutMapping
+    public ResponseEntity<ControllerResponseDto<MascotaDto>> update(@RequestBody @Valid MascotaDto dto) {
+        try {
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.update(dto)));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
+        }
+    }
 }
 
 

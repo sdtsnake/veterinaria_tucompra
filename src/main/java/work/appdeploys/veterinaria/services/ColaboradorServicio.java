@@ -8,11 +8,10 @@ public interface ColaboradorServicio extends CRUDService<ColaboradorDto> {
     @Override
     void delete(Long id);
     @Override
-    ColaboradorDto update(ColaboradorDto colaboradorDto);
-    @Override
     List<ColaboradorDto> findAll();
     @Override
     ColaboradorDto findById(Long id);
     ColaboradorDto findByDocumentoId(Integer idDocumento);
     ColaboradorDto save(ColaboradorDto colaboradorDto);
+    ColaboradorDto update(ColaboradorDto colaboradorDto);
 }

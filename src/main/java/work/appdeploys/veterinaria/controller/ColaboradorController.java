@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,14 @@ public class ColaboradorController extends CRUDController<ColaboradorDto, Colabo
     public ResponseEntity<ControllerResponseDto<ColaboradorDto>> save(@RequestBody @Valid ColaboradorDto dto) {
         try {
             return ResponseEntity.ok(ControllerResponseDto.fromValid(service.save(dto)));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
+        }
+    }
+    @PutMapping
+    public ResponseEntity<ControllerResponseDto<ColaboradorDto>> update(@RequestBody @Valid ColaboradorDto dto) {
+        try {
+            return ResponseEntity.ok(ControllerResponseDto.fromValid(service.update(dto)));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ControllerResponseDto.fromError(ex));
         }

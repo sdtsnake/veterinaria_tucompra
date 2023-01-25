@@ -4,14 +4,23 @@ import org.springframework.stereotype.Component;
 import work.appdeploys.veterinaria.models.Colaborador;
 import work.appdeploys.veterinaria.models.DetalleHistoriaClinica;
 import work.appdeploys.veterinaria.models.HistoriaClinica;
-import work.appdeploys.veterinaria.models.Mascota;
 import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPostDto;
-import work.appdeploys.veterinaria.models.dtos.HistoriaClinicaPostDto;
+import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPutDto;
 
 @Component
-public class DetalleHistoriaClinicaSaveMapper {
+public class DetalleHistoriaClinicaStructuresMapper {
+    public DetalleHistoriaClinica toModel(DetalleHistoriaClinicaPostDto detalleHistoriaClinicaPostDto) {
 
-    public DetalleHistoriaClinica toModel(DetalleHistoriaClinicaPostDto detalleHistoriaClinicaPostDto){
+        return getDetalleHistoriaClinica(detalleHistoriaClinicaPostDto);
+    }
+
+    public DetalleHistoriaClinica toModel(DetalleHistoriaClinicaPutDto detalleHistoriaClinicaPutDto) {
+        DetalleHistoriaClinica detalleHistoriaClinica = new DetalleHistoriaClinica();
+        detalleHistoriaClinica.setId(detalleHistoriaClinicaPutDto.getId());
+        return getDetalleHistoriaClinica(detalleHistoriaClinicaPutDto);
+    }
+
+    private DetalleHistoriaClinica getDetalleHistoriaClinica(DetalleHistoriaClinicaPostDto detalleHistoriaClinicaPostDto) {
         HistoriaClinica historiaClinica = new HistoriaClinica();
         historiaClinica.setId(detalleHistoriaClinicaPostDto.getIdHistoriaClinica());
         Colaborador colaborador = new Colaborador();
@@ -29,5 +38,4 @@ public class DetalleHistoriaClinicaSaveMapper {
         detalleHistoriaClinica.setHistoriaClinica(historiaClinica);
         return detalleHistoriaClinica;
     }
-
 }
