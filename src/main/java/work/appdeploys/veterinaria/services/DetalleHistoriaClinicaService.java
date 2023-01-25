@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface DetalleHistoriaClinicaService extends CRUDService<DetalleHistoriaClinicaDto>{
     @Override
-    DetalleHistoriaClinicaDto save(DetalleHistoriaClinicaDto detalleHistoriaClinicaDto);
-    @Override
     void delete(Long id);
     @Override
     DetalleHistoriaClinicaDto update(DetalleHistoriaClinicaDto detalleHistoriaClinicaDto);
@@ -15,6 +13,6 @@ public interface DetalleHistoriaClinicaService extends CRUDService<DetalleHistor
     List<DetalleHistoriaClinicaDto> findAll();
     @Override
     DetalleHistoriaClinicaDto findById(Long id);
-
     List<DetalleHistoriaClinicaDto> findAllByHistoriaId(Long idHistoriClinica);
+    DetalleHistoriaClinicaDto save(DetalleHistoriaClinicaDto detalleHistoriaClinicaDto);
 }

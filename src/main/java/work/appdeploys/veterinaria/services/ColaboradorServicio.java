@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface ColaboradorServicio extends CRUDService<ColaboradorDto> {
     @Override
-    ColaboradorDto save(ColaboradorDto colaboradorDto);
-    @Override
     void delete(Long id);
     @Override
     ColaboradorDto update(ColaboradorDto colaboradorDto);
@@ -16,4 +14,5 @@ public interface ColaboradorServicio extends CRUDService<ColaboradorDto> {
     @Override
     ColaboradorDto findById(Long id);
     ColaboradorDto findByDocumentoId(Integer idDocumento);
+    ColaboradorDto save(ColaboradorDto colaboradorDto);
 }
