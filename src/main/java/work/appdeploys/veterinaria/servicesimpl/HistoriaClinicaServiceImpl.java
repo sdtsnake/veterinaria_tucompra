@@ -32,7 +32,9 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
         validateExistMascotaById(historiaClinicaPostDto.getIdMascota(), MessageResource.MASCOTA_NOT_EXISTS.getValue().trim());
         validateMascotaHistoriaClinica(historiaClinicaPostDto.getIdMascota(),MessageResource.HISTORIA_CLINICA_MASCOTA_ALREADY_EXISTS.getValue().trim());
         dateValidator(historiaClinicaPostDto.getFechaCreacion().toString(), MessageResource.DATE_NOT_VALID.getValue().trim());
-        return historiaClinicaMapper.toDto(historiaClinicaRepository.save(historiaClinicaSaveMapper.toModel(historiaClinicaPostDto)));
+        HistoriaClinica historiaClinica = historiaClinicaRepository.save(historiaClinicaSaveMapper.toModel(historiaClinicaPostDto));
+        historiaClinica.setMascota(mascotaRepository.findById(historiaClinica.getMascota().getId()).get());
+        return historiaClinicaMapper.toDto(historiaClinica);
     }
     @Override
     public void delete(Long id) {
