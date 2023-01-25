@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -42,12 +43,12 @@ public class DetalleHistoriaClinica {
     private String alimentacion;
     private String habitad;
     private String observacion;
-    @ManyToOne
-    @JoinColumn(name = "colaborador_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "colaborador_id")
     @NotNull(message = "id del colaborador con un valor invalid")
     private Colaborador colaborador;
     @ManyToOne
-    @JoinColumn(name = "historia_clinica_id", nullable = false)
+    @JoinColumn(name = "historia_clinica_id")
     @NotNull(message = "id de la historia clinica con un valor invalid")
     private HistoriaClinica historiaClinica;
 }
