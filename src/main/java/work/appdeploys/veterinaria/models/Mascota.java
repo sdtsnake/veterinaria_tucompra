@@ -35,4 +35,8 @@ public class Mascota {
     private Usuario usuario;
     @NotNull(message = "Sexo con valores no valido debe ser 0 o 1")
     private Integer sexo;
+
+    public Mascota(Long id) {
+        this.id = id;
+    }
 }

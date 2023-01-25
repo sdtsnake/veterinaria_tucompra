@@ -5,11 +5,13 @@ import work.appdeploys.veterinaria.models.dtos.MascotaDto;
 import java.util.List;
 
 public interface MascotaService extends CRUDService<MascotaDto>{
-
-    MascotaDto save(MascotaDto mascotaDto);
+    @Override
     void delete(Long id);
-    MascotaDto update(MascotaDto mascotaDto);
+    @Override
     List<MascotaDto> findAll();
-    List<MascotaDto> findAllSinHistoria();
+    @Override
     MascotaDto findById(Long id);
+    List<MascotaDto> findAllSinHistoria();
+    MascotaDto save(MascotaDto mascotaDto);
+    MascotaDto update(MascotaDto mascotaDto);
 }
