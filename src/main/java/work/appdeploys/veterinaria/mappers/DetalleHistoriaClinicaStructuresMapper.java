@@ -12,8 +12,7 @@ import work.appdeploys.veterinaria.models.dtos.DetalleHistoriaClinicaPutDto;
 public class DetalleHistoriaClinicaStructuresMapper {
 
     public DetalleHistoriaClinica toModel(DetalleHistoriaClinicaPostDto detalleHistoriaClinicaPostDto) {
-        DetalleHistoriaClinica detalleHistoriaClinica = toModelBase(detalleHistoriaClinicaPostDto);
-        return detalleHistoriaClinica;
+        return toModelBase(detalleHistoriaClinicaPostDto);
     }
 
     public DetalleHistoriaClinica toModel(DetalleHistoriaClinicaPutDto detalleHistoriaClinicaPutDto) {
