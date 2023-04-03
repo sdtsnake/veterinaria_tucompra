@@ -37,11 +37,6 @@ public class DetalleHistoriaClinica {
     @NotNull(message = "Frecuencia respiratoria tiene un valor invalido")
     @Column(name = "frecuencia_respiratoria")
     private Double frecuenciaRespiratoria;
-
-    public DetalleHistoriaClinica(Long id) {
-        this.id = id;
-    }
-
     @NotNull(message = "Frecuencia respiratoria tiene un valor invalido")
     @Column(name = "fecha_hora")
     private LocalDateTime fechaHora;
@@ -56,4 +51,8 @@ public class DetalleHistoriaClinica {
     @JoinColumn(name = "historia_clinica_id")
     @NotNull(message = "id de la historia clinica con un valor invalid")
     private HistoriaClinica historiaClinica;
+    public DetalleHistoriaClinica(Long id) {
+        this.id = id;
+    }
+
 }
