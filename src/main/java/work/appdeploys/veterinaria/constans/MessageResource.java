@@ -16,6 +16,7 @@ public enum MessageResource {
     MASCOTAS_NOT_FOUND ("No existen macotas para listar"),
     HISTORIA_CLINICA_NOT_EXISTS ("La historia clinica no esta en la base de datos"),
     HISTORIA_CLINICA_ALREADY_EXISTS ("Ya exite historia clinica en la base de datos"),
+    HISTORIA_CLINICA_ERROR_DELETE ("Error Borrando la historia clinica"),
     HISTORIA_CLINICA_MASCOTA_ALREADY_EXISTS ("Macota ya tiene historia clinica"),
     HISTORIA_CLINICA_NOT_FOUND ("No existe historia clinica para listar"),
     COLABORADOR_ALREADY_EXISTS ("El colaborador ya esta registrado"),
@@ -40,3 +41,4 @@ public enum MessageResource {
         this.value = value;
     }
 }
+
