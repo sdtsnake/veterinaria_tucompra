@@ -60,13 +60,12 @@ public class HistortiaClinicaService implements HistoriaClinicaInPort {
         if(listHistoriasClinicas.isEmpty()){
             throw new HistoriaClinicaExeptionBadRequest(MessageResource.HISTORIA_CLINICA_NOT_FOUND.getValue());
         }
-
         return listHistoriasClinicas.stream().map(historiaClinicaOutMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public HistoriaClinicaInDto findById(Long id) {
-        return null;
+        return historiaClinicaOutMapper.toDto(historiaClinicaFindByIdPort.findById(id));
     }
 
     @Override
@@ -100,7 +99,10 @@ public class HistortiaClinicaService implements HistoriaClinicaInPort {
         return false;
     }
     private void validateExistHistoriaClinica(Long id, String message) {
-        historiaClinicaFindByIdPort.findById(id).orElseThrow(() -> new HistoriaClinicaExeptionBadRequest(message));
+        if(historiaClinicaFindByIdPort.findById(id) == null)
+        {
+           throw new HistoriaClinicaExeptionBadRequest(message);
+        }
     }
     private void validateExistMascotaById(Long id, String message) {
         mascotaRepository.findById(id).orElseThrow(() -> new HistoriaClinicaExeptionBadRequest(message));

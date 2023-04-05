@@ -1,7 +1,6 @@
 package work.appdeploys.veterinaria.historiasclinicas.adapters.in.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Data;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +27,16 @@ import java.util.List;
 @RequestMapping(value = "/api/hexagonal/veterinaria/historia/clinica")
 @WebAdapter
 @RestController
-//TODO preguntar porque no me esta funcinando por inyeccion por constructor hay error en el mapeador
-@Data
 public class HistoriaClinicaInController {
 
     private final HistoriaClinicaInPort historiaClinicaInPort;
     private final HistoriaClinicaInMapper historiaClinicaOutMapper;
+
+    public HistoriaClinicaInController(HistoriaClinicaInPort historiaClinicaInPort, HistoriaClinicaInMapper historiaClinicaOutMapper) {
+        this.historiaClinicaInPort = historiaClinicaInPort;
+        this.historiaClinicaOutMapper = historiaClinicaOutMapper;
+    }
+
     @PostMapping
     public ResponseEntity<ControllerResponseDto<HistoriaClinicaInDto>> save(@RequestBody @Valid HistoriaClinicaPostInDto dto) {
         try {

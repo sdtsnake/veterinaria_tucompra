@@ -55,15 +55,13 @@ public class HistoriaClinicaPersistenceAdapter implements HistoriaClinicaDeleteP
         }
         return listHistoriaClinicaEntity.stream().map(historiaClinicaOutMapper::toDomainModel).collect(Collectors.toList());
     }
-
-    //TODO no se como validar teniendo la capa adicional revisar con victor me toco cambiar esto aun optional
     @Override
-    public Optional<HistoriaClinica> findById(Long id) {
+    public HistoriaClinica findById(Long id) {
            HistoriaClinicaEntity historiaClinicaEntity = historiaClinicaOutRepository
                 .findById(id)
                 .orElseThrow(() ->new HistoriaClinicaExeptionBadRequest(MessageResource.HISTORIA_CLINICA_NOT_FOUND.getValue()));
 
-        return Optional.ofNullable(historiaClinicaOutMapper.toDomainModel(historiaClinicaEntity));
+        return historiaClinicaOutMapper.toDomainModel(historiaClinicaEntity);
     }
     @Override
     public HistoriaClinica save(HistoriaClinicaCommand historiaClinicaCommand) {

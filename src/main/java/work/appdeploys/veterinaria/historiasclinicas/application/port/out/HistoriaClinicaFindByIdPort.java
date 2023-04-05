@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface HistoriaClinicaFindByIdPort {
 
-    Optional<HistoriaClinica> findById(Long id);
+    HistoriaClinica findById(Long id);
 }
